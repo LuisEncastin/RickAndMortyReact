@@ -1,0 +1,25 @@
+.favoriteCard--container{
+    width: 300px;
+    border: 2px solid black;
+    border-radius: 15px;
+}
+.favoriteCard--image{
+    background-color: black;
+    opacity: 0.8;
+    border-radius: 15px 15px 0 0;
+}
+.favoriteCard--image img{
+    width: auto;
+    border-radius: 15px 15px 0 0;
+}
+.favoriteCard--name{
+    background-color: grey;
+    opacity: 0.8;
+    padding: 1rem;
+    border-radius: 0 0 15px 15px;
+}
+.favoriteCard--name p{
+    font-size: 2rem;
+    font-weight: 700;
+    color: white;
+}
