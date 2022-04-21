@@ -1,23 +1,26 @@
-import logo from './logo.svg';
+import { useContext } from 'react';
+
+import { ThemeContext } from './context/ThemeContext';
+// Componentes
+import {Header} from './components/Header/Header'
+import {Characters} from './components/Characters/Characters';
+// Styles
 import './App.css';
 
+
+
 function App() {
+
+  const {
+    darkMode,
+    darkThemeSettings
+  } = useContext(ThemeContext);
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div className="App" style={{backgroundColor: darkMode ? darkThemeSettings.darkMode : darkThemeSettings.lightMode}}>
+      <h1>Curso avanzado de Hooks</h1>
+      <Header/>
+      <Characters/>
     </div>
   );
 }
