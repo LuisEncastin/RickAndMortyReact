@@ -1,7 +1,10 @@
-import React, {useState, useEffect, useReducer, useMemo} from 'react'
+import React, {useState, useReducer, useMemo, useRef, useCallback} from 'react'
 // Components
 import { CharacterCard } from '../CharacterCard/CharacterCard';
 import { FavoriteCard } from '../FavoriteCard/FavoriteCard';
+import Search from '../Search/Search';
+//Hooks
+import { useCharacters } from '../../customHooks/useCharacters';
 // Styles
 import './Characters.css'
 
@@ -24,8 +27,12 @@ const favoriteReducer = (state, action) =>{
 
 const Characters = () => {
 
+    const searchInput = useRef(null);
+    const API = 'https://rickandmortyapi.com/api/character';
+    const characters = useCharacters(API);
+
     // useState
-    const [characters, setCharacters] = useState([])
+    // const [characters, setCharacters] = useState([])
     const [search, setSearch] = useState('');
 
     // useReducer
@@ -33,9 +40,13 @@ const Characters = () => {
 
     const handleClick = (favorite) => dispatch({type: 'ADD_TO_FAVORITE', payload: favorite});
 
-    const handleSearch = (event) =>{
-      setSearch(event.target.value)
-    }
+    // const handleSearch = () =>{
+    //   setSearch(searchInput.current.value)
+    // }
+
+    const handleSearch = useCallback(() =>{
+      setSearch(searchInput.current.value)
+    }, [])
 
     const filteredUsers = useMemo(()=>
       characters.filter((user)=>{
@@ -44,19 +55,23 @@ const Characters = () => {
     )
 
     // Fetch de personajes
-    useEffect(() => {
-          fetch('https://rickandmortyapi.com/api/character')
-          .then(response => response.json())
-          .then(responseJson => setCharacters(responseJson.results))
-    }, []);
+
+    // useEffect(() => {
+    //       fetch('https://rickandmortyapi.com/api/character')
+    //       .then(response => response.json())
+    //       .then(responseJson => setCharacters(responseJson.results))
+    // }, []);
+
+
 
   return (
     <div className='Characters'>
 
-        <div className="search">
-          <label htmlFor="searchInput">Busca a tu personaje favorito.</label>
-          <input type="text" id={'searchInput'} placeholder={'Buscar'} value={search} onChange={handleSearch} />
-        </div>
+        <Search 
+          search={search} 
+          searchInput={searchInput} 
+          handleSearch={handleSearch} 
+        />
 
         {state.favorites.map(favorite=>
         <FavoriteCard
